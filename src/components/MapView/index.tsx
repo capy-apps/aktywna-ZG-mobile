@@ -1,5 +1,5 @@
 import { useIonViewDidEnter } from "@ionic/react";
-import { LatLngTuple } from "leaflet";
+import { LatLngExpression, LatLngTuple } from "leaflet";
 import {
   Circle,
   LayerGroup,
@@ -8,11 +8,13 @@ import {
   Marker,
   Polyline,
   Popup,
-  TileLayer
+  TileLayer,
+  useMap
 } from "react-leaflet";
 import { BikePath } from "../../features/BikePaths/types";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { RepairStation } from "../../features/RepairStations/types";
+import { Geolocation } from "@capacitor/geolocation";
 
 interface MapViewProps {
   center: LatLngTuple;
@@ -25,13 +27,24 @@ export const MapView = ({
   bikePaths,
   repairStations
 }: MapViewProps) => {
+  const [mapCenter, setCenter] = useState<LatLngTuple>(center);
+
   useIonViewDidEnter(() => {
     window.dispatchEvent(new Event("resize"));
+    Geolocation.getCurrentPosition().then((position) => {
+      setCenter([position.coords.latitude, position.coords.longitude]);
+    });
   });
+
+  function ChangeMapView({ coords }: { coords: LatLngTuple }) {
+    const map = useMap();
+    map.setView(coords, map.getZoom());
+    return null;
+  }
 
   return (
     <MapContainer
-      center={center}
+      center={mapCenter}
       zoom={13}
       scrollWheelZoom={true}
       style={{ height: "100vh", width: "100%" }}>
@@ -80,6 +93,8 @@ export const MapView = ({
           ))}
         </LayersControl.Overlay>
       </LayersControl>
+
+      <ChangeMapView coords={mapCenter} />
     </MapContainer>
   );
 };
