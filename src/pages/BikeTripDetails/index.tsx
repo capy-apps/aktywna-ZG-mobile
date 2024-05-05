@@ -45,10 +45,10 @@ const BikeTripDetails = () => {
         {isBikeTripPending && <div>Ładowanie...</div>}
 
         {bikeTrip && (
-          <IonCard>
-            <IonHeader>
+          <IonCard className="Ion-Card">
+            <IonHeader className="Ion-Header">
               <IonCardTitle>{bikeTrip.name}</IonCardTitle>
-              <IonCardSubtitle>
+              <IonCardSubtitle class="Ion-Card-Subtitle">
                 {convertTimestamp(bikeTrip.created_at)}
               </IonCardSubtitle>
             </IonHeader>
@@ -62,7 +62,7 @@ const BikeTripDetails = () => {
             </IonCardContent>
 
             {bikeTrip.locations.length > 0 ? (
-              <div style={{ height: "50vh" }}>
+              <div className="Map-div">
                 <MapView
                   center={[
                     bikeTrip.locations[0].latitude,

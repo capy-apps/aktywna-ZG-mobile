@@ -6,6 +6,7 @@ import {
   IonCardTitle,
   IonContent,
   IonHeader,
+  IonImg,
   IonNavLink,
   IonPage,
   IonTitle,
@@ -43,16 +44,20 @@ const BikeTrips: React.FC = () => {
                   {convertTimestamp(trip.created_at)}
                 </IonCardSubtitle>
               </IonHeader>
-
               <IonCardContent className="Ion-Card-Content">
                 <p>{trip.description}</p>
                 {trip.difficulty && <p>Poziom trudności: {trip.difficulty}</p>}
                 {trip.length && <p>Długość trasy: {trip.length} km</p>}
 
-                <IonButton routerLink={`/bikeTrips/${trip.id}`}>
+                <IonButton routerLink={`/bikeTrips/${trip.id}`} className="Ion-Button">
                   Zobacz trasę
                 </IonButton>
               </IonCardContent>
+              <IonImg
+                src="https://thebreakofdawns.com/wp-content/uploads/2020/01/097A3686-1024x683.jpg"
+                alt="The Wisconsin State Capitol building in Madison, WI at night"
+                className="Ion-Img"
+            ></IonImg>
             </IonCard>
           ))}
       </IonContent>
