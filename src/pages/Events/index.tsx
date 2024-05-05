@@ -11,6 +11,7 @@ import {
 } from "@ionic/react";
 import { useEvents } from "../../features/Events/useEvents";
 import { convertTimestamp } from "../../utils/date";
+import '../mainStyles.css'
 
 const Events: React.FC = () => {
   const { events, isEventsPending, eventsError } = useEvents();
@@ -22,7 +23,7 @@ const Events: React.FC = () => {
           <IonTitle>Wydarzenia</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen className='Ion-Content'>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Wydarzenia</IonTitle>
@@ -33,13 +34,13 @@ const Events: React.FC = () => {
 
         {events &&
           events.map((event) => (
-            <IonCard key={event.id}>
-              <IonHeader>
+            <IonCard key={event.id} className='Ion-Card'>
+              <IonHeader className="Ion-Header">
                 <IonCardTitle>{event.name}</IonCardTitle>
-                <IonCardSubtitle>{convertTimestamp(event.created_at)}</IonCardSubtitle>
+                <IonCardSubtitle className="Ion-Card-Subtitle">{convertTimestamp(event.created_at)}</IonCardSubtitle>
               </IonHeader>
 
-              <IonCardContent>
+              <IonCardContent className="Ion-Card-Content">
                 <p>{event.description}</p>
               </IonCardContent>
             </IonCard>

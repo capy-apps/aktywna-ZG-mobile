@@ -1,0 +1,27 @@
+.Ion-Header{
+  box-shadow: none;
+  border-bottom: 1px solid #444444;
+}
+
+.Ion-Card{
+  max-width: 1200px; 
+  margin: auto;
+  margin-top: 15px;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.Ion-Card-Content{
+  padding-bottom:0px;
+}
+
+.Ion-Card-Subtitle{
+  margin-top: 10px;
+  margin-bottom:10px;
+}
+
+@media only screen and (max-width: 1215px) {
+  .Ion-Card{
+    margin: 15px;
+  }
+}

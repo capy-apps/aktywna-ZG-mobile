@@ -13,6 +13,7 @@ import {
 } from "@ionic/react";
 import { convertTimestamp } from "../../utils/date";
 import { useBikeTrips } from "../../features/BikeTrips/useBikeTrips";
+import '../mainStyles.css'
 
 const BikeTrips: React.FC = () => {
   const { bikeTrips, isBikeTripsPending, bikeTripsError } = useBikeTrips();
@@ -35,15 +36,15 @@ const BikeTrips: React.FC = () => {
 
         {bikeTrips &&
           bikeTrips.map((trip) => (
-            <IonCard key={trip.id}>
-              <IonHeader>
+            <IonCard key={trip.id} className="Ion-Card">
+              <IonHeader className="Ion-Header">
                 <IonCardTitle>{trip.name}</IonCardTitle>
-                <IonCardSubtitle>
+                <IonCardSubtitle className="Ion-Card-Subtitle">
                   {convertTimestamp(trip.created_at)}
                 </IonCardSubtitle>
               </IonHeader>
 
-              <IonCardContent>
+              <IonCardContent className="Ion-Card-Content">
                 <p>{trip.description}</p>
                 {trip.difficulty && <p>Poziom trudności: {trip.difficulty}</p>}
                 {trip.length && <p>Długość trasy: {trip.length} km</p>}
