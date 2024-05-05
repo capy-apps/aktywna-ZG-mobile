@@ -3,19 +3,26 @@ import { LatLngTuple } from "leaflet";
 import {
   Circle,
   MapContainer,
+  Marker,
   Polyline,
   Popup,
   TileLayer
 } from "react-leaflet";
 import { BikePath } from "../../features/BikePaths/types";
 import { Fragment } from "react";
+import { RepairStation } from "../../features/RepairStations/types";
 
 interface MapViewProps {
   center: LatLngTuple;
   bikePaths?: BikePath[] | undefined;
+  repairStations?: RepairStation[] | undefined;
 }
 
-export const MapView = ({ center, bikePaths }: MapViewProps) => {
+export const MapView = ({
+  center,
+  bikePaths,
+  repairStations
+}: MapViewProps) => {
   useIonViewDidEnter(() => {
     window.dispatchEvent(new Event("resize"));
   });
@@ -54,6 +61,14 @@ export const MapView = ({ center, bikePaths }: MapViewProps) => {
           </Fragment>
         );
       })}
+
+      {repairStations?.map((repairStation) => (
+        <Marker
+          key={repairStation.id}
+          position={[repairStation.latitude, repairStation.longitude]}>
+          <Popup>{repairStation.name}</Popup>
+        </Marker>
+      ))}
     </MapContainer>
   );
 };
