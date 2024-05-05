@@ -13,8 +13,7 @@ import { useRepairStations } from "../../features/RepairStations/useReapirStatio
 const Map: React.FC = () => {
   const { bikeTrips, isBikeTripsPending, bikeTripsError } = useBikeTrips();
   const { bikePaths, isBikePathsPending, bikePathsError } = useBikePaths();
-  const { repairStations, isRepairStationsPending, repairStationsError } =
-    useRepairStations();
+  const { repairStations, isRepairStationsPending, repairStationsError } = useRepairStations();
 
   return (
     <IonPage>
