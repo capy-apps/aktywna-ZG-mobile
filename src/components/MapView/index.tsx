@@ -15,24 +15,30 @@ import { BikePath } from "../../features/BikePaths/types";
 import { Fragment, useState } from "react";
 import { RepairStation } from "../../features/RepairStations/types";
 import { Geolocation } from "@capacitor/geolocation";
+import { BikeTripLocations } from "../../features/BikeTrips/types";
 
 interface MapViewProps {
   center: LatLngTuple;
   bikePaths?: BikePath[] | undefined;
   repairStations?: RepairStation[] | undefined;
+  bikeTrip?: BikeTripLocations | undefined;
 }
 
 export const MapView = ({
   center,
   bikePaths,
-  repairStations
+  repairStations,
+  bikeTrip
 }: MapViewProps) => {
-  const [mapCenter, setCenter] = useState<LatLngTuple>(center);
+  const [userLocation, setUserLocation] = useState<LatLngExpression | null>(
+    null
+  );
 
   useIonViewDidEnter(() => {
     window.dispatchEvent(new Event("resize"));
+
     Geolocation.getCurrentPosition().then((position) => {
-      setCenter([position.coords.latitude, position.coords.longitude]);
+      setUserLocation([position.coords.latitude, position.coords.longitude]);
     });
   });
 
@@ -44,43 +50,45 @@ export const MapView = ({
 
   return (
     <MapContainer
-      center={mapCenter}
+      center={center}
       zoom={13}
       scrollWheelZoom={true}
-      style={{ height: "100vh", width: "100%" }}>
+      style={{ height: "100%", width: "100%" }}>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
       <LayersControl position="topright">
         <LayersControl.Overlay name="Ścieżki rowerowe" checked>
-          <LayerGroup>
-            {bikePaths?.map((bikePath) => {
-              const firstLocation = bikePath.locations[0];
-              const lastLocation =
-                bikePath.locations[bikePath.locations.length - 1];
-              const infoLocations = [firstLocation, lastLocation];
+          {bikePaths && (
+            <LayerGroup>
+              {bikePaths.map((bikePath) => {
+                const firstLocation = bikePath.locations[0];
+                const lastLocation =
+                  bikePath.locations[bikePath.locations.length - 1];
+                const infoLocations = [firstLocation, lastLocation];
 
-              return (
-                <Fragment key={bikePath.id}>
-                  {infoLocations.map((location) => (
-                    <Circle
-                      key={location.latitude + location.longitude}
-                      center={[location.latitude, location.longitude]}
-                      radius={20}
-                      fill>
-                      <Popup>{bikePath.name}</Popup>
-                    </Circle>
-                  ))}
+                return (
+                  <Fragment key={bikePath.id}>
+                    {infoLocations.map((location) => (
+                      <Circle
+                        key={location.latitude + location.longitude}
+                        center={[location.latitude, location.longitude]}
+                        radius={20}
+                        fill>
+                        <Popup>{bikePath.name}</Popup>
+                      </Circle>
+                    ))}
 
-                  <Polyline
-                    positions={bikePath.locations.map((location) => [
-                      location.latitude,
-                      location.longitude
-                    ])}
-                  />
-                </Fragment>
-              );
-            })}
-          </LayerGroup>
+                    <Polyline
+                      positions={bikePath.locations.map((location) => [
+                        location.latitude,
+                        location.longitude
+                      ])}
+                    />
+                  </Fragment>
+                );
+              })}
+            </LayerGroup>
+          )}
         </LayersControl.Overlay>
 
         <LayersControl.Overlay name="Stacje serwisowe" checked>
@@ -94,7 +102,22 @@ export const MapView = ({
         </LayersControl.Overlay>
       </LayersControl>
 
-      <ChangeMapView coords={mapCenter} />
+      {bikeTrip && (
+        <Polyline
+          positions={bikeTrip.locations.map((location) => [
+            location.latitude,
+            location.longitude
+          ])}
+        />
+      )}
+
+      {userLocation && (
+        <Marker position={userLocation}>
+          <Popup>Twoja lokalizacja</Popup>
+        </Marker>
+      )}
+
+      <ChangeMapView coords={center} />
     </MapContainer>
   );
 };

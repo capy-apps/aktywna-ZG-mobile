@@ -32,6 +32,8 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import Map from './pages/Map';
 import Events from './pages/Events';
+import BikeTrips from './pages/BikeTrips';
+import BikeTripDetails from './pages/BikeTripDetails';
 
 setupIonicReact();
 
@@ -40,11 +42,18 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
+
           <Route exact path="/map">
             <Map />
           </Route>
           <Route exact path="/events">
             <Events />
+          </Route>
+          <Route exact path="/bikeTrips">
+            <BikeTrips />
+          </Route>
+          <Route exact path="/bikeTrips/:id">
+            <BikeTripDetails />
           </Route>
 
           <Route exact path="/">
@@ -60,9 +69,9 @@ const App: React.FC = () => (
             <IonIcon aria-hidden="true" icon={ellipse} />
             <IonLabel>Wydarzenia</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
+          <IonTabButton tab="tab3" href="/bikeTrips">
             <IonIcon aria-hidden="true" icon={square} />
-            <IonLabel>Tab 3</IonLabel>
+            <IonLabel>Trasy</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>

@@ -6,12 +6,10 @@ import {
   IonToolbar
 } from "@ionic/react";
 import { MapView } from "../../components/MapView";
-import { useBikeTrips } from "../../features/BikeTrips/useBikeTrips";
 import { useBikePaths } from "../../features/BikePaths/useBikePaths";
 import { useRepairStations } from "../../features/RepairStations/useReapirStations";
 
 const Map: React.FC = () => {
-  const { bikeTrips, isBikeTripsPending, bikeTripsError } = useBikeTrips();
   const { bikePaths, isBikePathsPending, bikePathsError } = useBikePaths();
   const { repairStations, isRepairStationsPending, repairStationsError } = useRepairStations();
 

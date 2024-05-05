@@ -1,5 +1,6 @@
 import {
   IonCard,
+  IonCardContent,
   IonCardSubtitle,
   IonCardTitle,
   IonContent,
@@ -32,15 +33,15 @@ const Events: React.FC = () => {
 
         {events &&
           events.map((event) => (
-            <IonCard>
+            <IonCard key={event.id}>
               <IonHeader>
                 <IonCardTitle>{event.name}</IonCardTitle>
                 <IonCardSubtitle>{convertTimestamp(event.created_at)}</IonCardSubtitle>
               </IonHeader>
 
-              <IonContent>
+              <IonCardContent>
                 <p>{event.description}</p>
-              </IonContent>
+              </IonCardContent>
             </IonCard>
           ))}
       </IonContent>
