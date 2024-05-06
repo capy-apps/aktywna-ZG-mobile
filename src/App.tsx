@@ -10,7 +10,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
+import { bicycle, map, newspaper } from 'ionicons/icons';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -62,15 +62,15 @@ const App: React.FC = () => (
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="map" href="/map">
-            <IonIcon aria-hidden="true" icon={triangle} />
+            <IonIcon aria-hidden="true" icon={map} />
             <IonLabel>Mapa</IonLabel>
           </IonTabButton>
           <IonTabButton tab="events" href="/events">
-            <IonIcon aria-hidden="true" icon={ellipse} />
+            <IonIcon aria-hidden="true" icon={newspaper} />
             <IonLabel>Wydarzenia</IonLabel>
           </IonTabButton>
           <IonTabButton tab="tab3" href="/bikeTrips">
-            <IonIcon aria-hidden="true" icon={square} />
+            <IonIcon aria-hidden="true" icon={bicycle} />
             <IonLabel>Trasy</IonLabel>
           </IonTabButton>
         </IonTabBar>
