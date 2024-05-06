@@ -1,46 +1,62 @@
-.Ion-Header{
+.Ion-Header {
   box-shadow: none;
   border-bottom: 1px solid #444444;
 }
 
-.Ion-Card{
-  max-width: 1200px; 
+.Ion-Card {
+  max-width: 1200px;
   margin: auto;
   margin-top: 15px;
   padding: 20px;
   border-radius: 20px;
+}
+
+.playground {
   display: flex;
-  flex-wrap: wrap;
+  width: 100vw;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.Ion-Card-Content{
-  padding-bottom:0px;
-  width: 70%;
+.Ion-Card-Photo {
+  margin-top: 15px;
+  padding: 20px;
+  border-radius: 20px;
 }
 
-.Ion-Card-Subtitle{
+.Ion-Card-Subtitle {
   margin-top: 10px;
-  margin-bottom:10px;
-}
-.Ion-Img{
-  width: 20%;
-  height: auto;
-  position: relative;
-  right: 0;
-  padding-top:10px;
+  margin-bottom: 10px;
 }
 
-.Map-div{
+.Map-div {
   width: 100%;
   height: 60vh;
   margin-top: 10px;
-
 }
-.Ion-Button{
+
+.Ion-Button {
   margin-top: 20px;
 }
-@media only screen and (max-width: 1215px) {
-  .Ion-Card{
-    margin: 15px;
+
+@media only screen and (min-width: 768px) {
+  .playground {
+    flex-wrap: wrap;
+    width: 80vw;
+    flex-direction: row;
+  }
+
+  .Ion-Card-Photo {
+    width: calc(33.33% - 30px);
+    margin-right: 15px;
+    margin-bottom: 15px;
+  }
+
+  .Ion-Card-Photo:nth-child(3n) {
+    margin-right: 0;
+  }
+
+  .Ion-Card-Photo:last-child {
+    margin-right: 0;
   }
 }
