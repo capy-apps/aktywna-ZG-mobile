@@ -7,6 +7,7 @@ import {
   IonCardTitle,
   IonContent,
   IonHeader,
+  IonImg,
   IonPage,
   IonTitle,
   IonToolbar
@@ -73,6 +74,13 @@ const BikeTripDetails = () => {
               </div>
             ) : (
               <div>Brak danych o trasie</div>
+            )}
+
+            {bikeTrip.image.length > 0 && (
+              <IonImg
+                src={bikeTrip.image}
+                alt={bikeTrip.name}
+                className="Ion-Img"></IonImg>
             )}
           </IonCard>
         )}

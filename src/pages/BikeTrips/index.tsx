@@ -14,7 +14,7 @@ import {
 } from "@ionic/react";
 import { convertTimestamp } from "../../utils/date";
 import { useBikeTrips } from "../../features/BikeTrips/useBikeTrips";
-import '../mainStyles.css'
+import "../mainStyles.css";
 
 const BikeTrips: React.FC = () => {
   const { bikeTrips, isBikeTripsPending, bikeTripsError } = useBikeTrips();
@@ -49,15 +49,18 @@ const BikeTrips: React.FC = () => {
                 {trip.difficulty && <p>Poziom trudności: {trip.difficulty}</p>}
                 {trip.length && <p>Długość trasy: {trip.length} km</p>}
 
-                <IonButton routerLink={`/bikeTrips/${trip.id}`} className="Ion-Button">
+                <IonButton
+                  routerLink={`/bikeTrips/${trip.id}`}
+                  className="Ion-Button">
                   Zobacz trasę
                 </IonButton>
               </IonCardContent>
-              <IonImg
-                src="https://thebreakofdawns.com/wp-content/uploads/2020/01/097A3686-1024x683.jpg"
-                alt="The Wisconsin State Capitol building in Madison, WI at night"
-                className="Ion-Img"
-            ></IonImg>
+              {trip.image.length > 0 && (
+                <IonImg
+                  src={trip.image}
+                  alt={trip.name}
+                  className="Ion-Img"></IonImg>
+              )}
             </IonCard>
           ))}
       </IonContent>
