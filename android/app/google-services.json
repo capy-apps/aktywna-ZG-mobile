@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "220013259537",
+    "project_id": "aktywna-zg",
+    "storage_bucket": "aktywna-zg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220013259537:android:e98049a2fa273a83853ab0",
+        "android_client_info": {
+          "package_name": "pl.aktywnazg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3yaD8OR9qJqsxlQcFpUP_syAk3FaEwlk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

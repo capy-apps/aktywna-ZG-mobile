@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Aktywna ZG</string>
+    <string name="title_activity_main">Aktywna ZG</string>
+    <string name="package_name">pl.aktywnazg</string>
+    <string name="custom_url_scheme">pl.aktywnazg</string>
+</resources>
