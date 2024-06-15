@@ -1,4 +1,4 @@
-import { useIonViewDidEnter } from "@ionic/react";
+import { IonButton, IonText, useIonViewDidEnter } from "@ionic/react";
 import { LatLngExpression, LatLngTuple } from "leaflet";
 import {
   Circle,
@@ -96,7 +96,17 @@ export const MapView = ({
             <Marker
               key={repairStation.id}
               position={[repairStation.latitude, repairStation.longitude]}>
-              <Popup>{repairStation.name}</Popup>
+              <Popup>
+                <IonText>
+                  Stacja samodzielnej naprawy rowerów: <br />
+                  {repairStation.name}
+                </IonText>
+                <IonButton
+                  href={`http://maps.google.com/maps?q=loc:${repairStation.latitude},${repairStation.longitude}`}
+                  color="danger">
+                  Prowadź do punktu
+                </IonButton>
+              </Popup>
             </Marker>
           ))}
         </LayersControl.Overlay>
