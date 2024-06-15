@@ -17,6 +17,10 @@ import { useBikeTrips } from "../../features/BikeTrips/useBikeTrips";
 import { MapView } from "../../components/MapView";
 import { useParams } from "react-router";
 import { caretBack } from "ionicons/icons";
+import { useEffect, useState } from "react";
+import { URLS } from "../../URLS";
+import Axios from "../../utils/axios";
+import { Rating } from "react-simple-star-rating";
 
 interface ParamTypes {
   id: string;
@@ -24,7 +28,26 @@ interface ParamTypes {
 
 const BikeTripDetails = () => {
   const { id } = useParams<ParamTypes>();
-  const { bikeTrip, isBikeTripPending, bikeTripError } = useBikeTrips(id);
+  const { bikeTrip, isBikeTripPending, ratings, rateBikeTrip } =
+    useBikeTrips(id);
+
+  const [photo, setPhoto] = useState<string | null>(null);
+  const [rating, setRating] = useState(0);
+
+  useEffect(() => {
+    if (bikeTrip && bikeTrip.photos.length > 0) {
+      const photoID = bikeTrip.photos[0].toString();
+      Axios.get<string>(URLS.PHOTOS(photoID)).then((res) => {
+        setPhoto(res.data);
+      });
+    }
+  }, [bikeTrip]);
+
+  useEffect(() => {
+    if (bikeTrip) {
+      setRating(ratings[bikeTrip.id] || 0);
+    }
+  }, [bikeTrip, ratings]);
 
   return (
     <IonPage>
@@ -60,6 +83,18 @@ const BikeTripDetails = () => {
                 <p>Poziom trudności: {bikeTrip.difficulty}</p>
               )}
               {bikeTrip.length && <p>Długość trasy: {bikeTrip.length} km</p>}
+
+              {bikeTrip.rating && (
+                <p>Ocena: {Math.round(bikeTrip.rating)} / 5 ⭐️</p>
+              )}
+              <Rating
+                initialValue={rating}
+                onClick={(rate) => {
+                  setRating(rate);
+                  rateBikeTrip(bikeTrip.id, rate);
+                }}
+                readonly={rating !== 0}
+              />
             </IonCardContent>
 
             {bikeTrip.locations.length > 0 ? (
@@ -76,10 +111,9 @@ const BikeTripDetails = () => {
               <div>Brak danych o trasie</div>
             )}
 
-            {bikeTrip.image.length > 0 && (
+            {photo && (
               <IonImg
-                src={bikeTrip.image}
-                alt={bikeTrip.name}
+                src={`data:image/jpeg;base64,${photo}`}
                 className="Ion-Img"></IonImg>
             )}
           </IonCard>

@@ -10,10 +10,11 @@ export interface BikeTrip {
   length: number;
   difficulty: string;
   description: string;
-  image: string;
   created_at: number;
+  rating: number;
 }
 
 export interface BikeTripLocations extends BikeTrip {
   locations: Location[] | [];
+  photos: number[];
 }

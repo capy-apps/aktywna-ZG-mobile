@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { BikeTrip, BikeTripLocations } from "./types";
 import Axios from "../../utils/axios";
 import { URLS } from "../../URLS";
@@ -41,6 +41,24 @@ export const useBikeTrips = (id?: string) => {
     }
   };
 
+  const [ratings, setRatings] = useState<{ [key: number]: number }>(() => {
+    const rating = localStorage.getItem("ratings");
+    return rating ? JSON.parse(rating) : []
+  });
+
+  const rateBikeTripMutation = useMutation({
+    mutationKey: ["rateBikeTrip"],
+    mutationFn: ({ id, rating }: { id: number; rating: number }) =>
+      Axios.post(URLS.RATE(id.toString()), { rating }).then((res) => res.data)
+  });
+
+  const rateBikeTrip = (id: number, rating: number) => {
+    const newRatings = { ...ratings, [id]: rating };
+    localStorage.setItem("ratings", JSON.stringify(newRatings));
+    setRatings(newRatings);
+    rateBikeTripMutation.mutate({ id, rating });
+  };
+
   return {
     bikeTrips,
     isBikeTripsPending,
@@ -51,6 +69,9 @@ export const useBikeTrips = (id?: string) => {
     bikeTripError,
 
     favourites,
-    addFavourite
+    addFavourite,
+    ratings,
+    rateBikeTripMutation,
+    rateBikeTrip
   };
 };

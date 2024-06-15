@@ -50,33 +50,18 @@ const BikeTrips: React.FC = () => {
                 .sort((a, b) => (favourites.includes(b.id) ? 1 : -1))
                 .map((trip) => (
                   <IonCard key={trip.id} className="Ion-Card-Photo">
-                    <div>
-                      <IonIcon
-                        onClick={() => addFavourite(trip.id)}
-                        icon={
-                          favourites.includes(trip.id) ? heartDislike : heart
-                        }
-                        style={{
-                          color: "red",
-                          fontSize: "30px",
-                          cursor: "pointer",
-                          position: "absolute",
-                          right: "10px",
-                          top: "10px"
-                        }}
-                      />
-                      {trip.image.length > 0 && (
-                        <img
-                          src={trip.image}
-                          alt={trip.name}
-                          style={{
-                            width: "100%",
-                            height: "200px",
-                            objectFit: "cover"
-                          }}
-                        />
-                      )}
-                    </div>
+                    <IonIcon
+                      onClick={() => addFavourite(trip.id)}
+                      icon={favourites.includes(trip.id) ? heartDislike : heart}
+                      style={{
+                        color: "red",
+                        fontSize: "30px",
+                        cursor: "pointer",
+                        position: "absolute",
+                        right: "10px",
+                        top: "10px"
+                      }}
+                    />
                     <IonCardHeader className="Ion-Header">
                       <IonCardTitle>{trip.name}</IonCardTitle>
                       <IonCardSubtitle className="Ion-Card-Subtitle">
@@ -89,6 +74,8 @@ const BikeTrips: React.FC = () => {
                         <p>Poziom trudności: {trip.difficulty}</p>
                       )}
                       {trip.length && <p>Długość trasy: {trip.length} km</p>}
+
+                      {trip.rating && <p>Ocena: {Math.round(trip.rating)} / 5 ⭐️</p>}
 
                       <IonButton
                         routerLink={`/bikeTrips/${trip.id}`}
