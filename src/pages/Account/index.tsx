@@ -24,9 +24,11 @@ import {
   useIonViewDidEnter
 } from "@ionic/react";
 import { useState } from "react";
+import { useEvents } from "../../features/Events/useEvents";
 
 export const Account = () => {
   const [user, setUser] = useState<User | null>(null);
+  const { userEvents } = useEvents(user?.uid);
 
   useIonViewDidEnter(() => {
     getCurrentUser().then((user) => {
@@ -96,6 +98,28 @@ export const Account = () => {
             </IonCardContent>
           </IonCard>
         )}
+
+        {userEvents && userEvents.length > 0 ? (
+          <IonCard>
+            <IonCardHeader>
+              <IonCardTitle>Twoje osiągnięcia</IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <IonList>
+                {userEvents.map((event) => (
+                  <IonItem key={event.id}>
+                    <IonThumbnail slot="start">
+                      <IonImg src={`data:image/jpeg;base64,${event.image}`} />
+                    </IonThumbnail>
+                    <IonLabel>
+                      <h2>{event.name}</h2>
+                    </IonLabel>
+                  </IonItem>
+                ))}
+              </IonList>
+            </IonCardContent>
+          </IonCard>
+        ) : null}
       </IonContent>
     </IonPage>
   );

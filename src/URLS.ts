@@ -8,4 +8,5 @@ export const URLS = {
   BIKE_PATHS: () => '/map/bike-paths',
   REPAIR_STATIONS: () => '/map/repair-stations',
   EVENTS: () => '/events',
+  USER_EVENTS: (uuid: string) => `/events/user/${uuid}`,
 }
