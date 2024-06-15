@@ -10,7 +10,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { bicycle, map, newspaper } from 'ionicons/icons';
+import { bicycle, map, newspaper, personCircle } from 'ionicons/icons';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -34,6 +34,7 @@ import Map from './pages/Map';
 import Events from './pages/Events';
 import BikeTrips from './pages/BikeTrips';
 import BikeTripDetails from './pages/BikeTripDetails';
+import { Account } from './pages/Account';
 
 setupIonicReact();
 
@@ -55,6 +56,9 @@ const App: React.FC = () => (
           <Route exact path="/bikeTrips/:id">
             <BikeTripDetails />
           </Route>
+          <Route exact path="/account">
+            <Account />
+          </Route>
 
           <Route exact path="/">
             <Redirect to="/map" />
@@ -72,6 +76,10 @@ const App: React.FC = () => (
           <IonTabButton tab="tab3" href="/bikeTrips">
             <IonIcon aria-hidden="true" icon={bicycle} />
             <IonLabel>Trasy</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="account" href="/account">
+            <IonIcon aria-hidden="true" icon={personCircle} />
+            <IonLabel>Konto</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>

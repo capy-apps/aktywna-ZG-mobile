@@ -12,6 +12,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@capacitor-firebase/authentication": "^6.0.0",
     "@capacitor/android": "^6.0.0",
     "@capacitor/app": "6.0.0",
     "@capacitor/core": "6.0.0",
@@ -26,6 +27,7 @@
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.6.8",
+    "firebase": "^10.12.2",
     "ionicons": "^7.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
