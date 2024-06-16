@@ -117,7 +117,7 @@ const BikeTripDetails = () => {
               </IonButton>
             </IonCardContent>
 
-            {bikeTrip.photos.length > 0 ? (
+            {bikeTrip.photos.length > 0 && (
               <>
                 <Gallery
                   onClick={handleImageClick}
@@ -137,8 +137,6 @@ const BikeTripDetails = () => {
                   close={() => setIndex(-1)}
                 />
               </>
-            ) : (
-              <div>Brak zdjęć do zatwierdzenia</div>
             )}
 
             {bikeTrip.locations.length > 0 ? (
