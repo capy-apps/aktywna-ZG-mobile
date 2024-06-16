@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { BikeTrip, BikeTripLocations } from "./types";
+import { BikeTrip, BikeTripLocations, BikeTripRequest } from "./types";
 import Axios from "../../utils/axios";
 import { URLS } from "../../URLS";
 import { useState } from "react";
@@ -43,7 +43,7 @@ export const useBikeTrips = (id?: string) => {
 
   const [ratings, setRatings] = useState<{ [key: number]: number }>(() => {
     const rating = localStorage.getItem("ratings");
-    return rating ? JSON.parse(rating) : []
+    return rating ? JSON.parse(rating) : [];
   });
 
   const rateBikeTripMutation = useMutation({
@@ -64,7 +64,27 @@ export const useBikeTrips = (id?: string) => {
     mutationFn: ({ id, photo }: { id: number; photo: File }) => {
       const formData = new FormData();
       formData.append("file", photo);
-      return Axios.post(URLS.PHOTOS(id.toString()), formData).then((res) => res.data);
+      return Axios.post(URLS.PHOTOS(id.toString()), formData).then(
+        (res) => res.data
+      );
+    }
+  });
+
+  const addBikeTrip = useMutation({
+    mutationKey: ["addBikeTrip"],
+    mutationFn: (data: BikeTripRequest) =>
+      Axios.post(URLS.BIKE_TRIPS(), data).then((res) => res.data)
+  });
+
+  const addBikeTripLocations = useMutation({
+    mutationKey: ["addBikeTripLocations"],
+    mutationFn: ({ id, file }: { id: number; file: File }) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      return Axios.post(
+        URLS.ADD_BIKE_TRIP_LOCATION(id.toString()),
+        formData
+      ).then((res) => res.data);
     }
   });
 
@@ -83,6 +103,9 @@ export const useBikeTrips = (id?: string) => {
     rateBikeTripMutation,
     rateBikeTrip,
 
-    addPhoto
+    addPhoto,
+
+    addBikeTrip,
+    addBikeTripLocations
   };
 };

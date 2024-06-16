@@ -35,6 +35,7 @@ import Events from './pages/Events';
 import BikeTrips from './pages/BikeTrips';
 import BikeTripDetails from './pages/BikeTripDetails';
 import { Account } from './pages/Account';
+import { BikeTripForm } from './pages/BikeTripForm';
 
 setupIonicReact();
 
@@ -55,6 +56,9 @@ const App: React.FC = () => (
           </Route>
           <Route exact path="/bikeTrips/:id">
             <BikeTripDetails />
+          </Route>
+          <Route exact path="/bikeTrips/form">
+            <BikeTripForm />
           </Route>
           <Route exact path="/account">
             <Account />

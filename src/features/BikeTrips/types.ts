@@ -18,3 +18,9 @@ export interface BikeTripLocations extends BikeTrip {
   locations: Location[] | [];
   photos: number[];
 }
+
+export interface BikeTripRequest {
+  name: string;
+  difficulty: string;
+  description: string;
+}

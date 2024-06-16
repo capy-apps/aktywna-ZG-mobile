@@ -43,6 +43,11 @@ const BikeTrips: React.FC = () => {
         </IonHeader>
 
         {isBikeTripsPending && <div>Ładowanie...</div>}
+
+        <IonButton routerLink="/bikeTrips/form" className="Ion-Button">
+          Dodaj nową trasę!
+        </IonButton>
+
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div className="playground">
             {bikeTrips &&
@@ -75,7 +80,9 @@ const BikeTrips: React.FC = () => {
                       )}
                       {trip.length && <p>Długość trasy: {trip.length} km</p>}
 
-                      {trip.rating && <p>Ocena: {Math.round(trip.rating)} / 5 ⭐️</p>}
+                      {trip.rating && (
+                        <p>Ocena: {Math.round(trip.rating)} / 5 ⭐️</p>
+                      )}
 
                       <IonButton
                         routerLink={`/bikeTrips/${trip.id}`}
