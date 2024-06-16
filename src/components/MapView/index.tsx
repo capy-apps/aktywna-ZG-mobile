@@ -12,7 +12,7 @@ import {
   useMap
 } from "react-leaflet";
 import { BikePath } from "../../features/BikePaths/types";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { RepairStation } from "../../features/RepairStations/types";
 import { Geolocation } from "@capacitor/geolocation";
 import { BikeTripLocations } from "../../features/BikeTrips/types";
@@ -34,13 +34,12 @@ export const MapView = ({
     null
   );
 
-  useIonViewDidEnter(() => {
+  useEffect(() => {
     window.dispatchEvent(new Event("resize"));
-
     Geolocation.getCurrentPosition().then((position) => {
       setUserLocation([position.coords.latitude, position.coords.longitude]);
     });
-  });
+  }, []);
 
   function ChangeMapView({ coords }: { coords: LatLngTuple }) {
     const map = useMap();
