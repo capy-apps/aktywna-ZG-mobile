@@ -8,7 +8,8 @@ export const useBikeTrips = (id?: string) => {
   const {
     data: bikeTrips,
     isPending: isBikeTripsPending,
-    error: bikeTripsError
+    error: bikeTripsError,
+    refetch: refetchBikeTrips
   } = useQuery<BikeTrip[]>({
     queryKey: ["bikeTrips"],
     queryFn: () =>
@@ -92,6 +93,7 @@ export const useBikeTrips = (id?: string) => {
     bikeTrips,
     isBikeTripsPending,
     bikeTripsError,
+    refetchBikeTrips,
 
     bikeTrip,
     isBikeTripPending,

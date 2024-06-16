@@ -6,6 +6,7 @@ export interface Location {
 
 export interface BikeTrip {
   id: number;
+  public: boolean;
   name: string;
   length: number;
   difficulty: string;
