@@ -1,5 +1,7 @@
 import {
+  IonAlert,
   IonBackButton,
+  IonButton,
   IonButtons,
   IonCard,
   IonCardContent,
@@ -7,6 +9,7 @@ import {
   IonCardTitle,
   IonContent,
   IonHeader,
+  IonIcon,
   IonImg,
   IonPage,
   IonTitle,
@@ -16,7 +19,7 @@ import { convertTimestamp } from "../../utils/date";
 import { useBikeTrips } from "../../features/BikeTrips/useBikeTrips";
 import { MapView } from "../../components/MapView";
 import { useParams } from "react-router";
-import { caretBack } from "ionicons/icons";
+import { camera, caretBack } from "ionicons/icons";
 import { useEffect, useState } from "react";
 import { URLS } from "../../URLS";
 import Axios from "../../utils/axios";
@@ -28,11 +31,12 @@ interface ParamTypes {
 
 const BikeTripDetails = () => {
   const { id } = useParams<ParamTypes>();
-  const { bikeTrip, isBikeTripPending, ratings, rateBikeTrip } =
+  const { bikeTrip, isBikeTripPending, ratings, rateBikeTrip, addPhoto } =
     useBikeTrips(id);
 
   const [photo, setPhoto] = useState<string | null>(null);
   const [rating, setRating] = useState(0);
+  const [isPhotoAlertOpen, setIsPhotoAlertOpen] = useState(false);
 
   useEffect(() => {
     if (bikeTrip && bikeTrip.photos.length > 0) {
@@ -48,6 +52,16 @@ const BikeTripDetails = () => {
       setRating(ratings[bikeTrip.id] || 0);
     }
   }, [bikeTrip, ratings]);
+
+  const openFileDialog = () => {
+    (document as any).getElementById("file-upload").click();
+  };
+
+  const sendPhoto = (_event: any) => {
+    const file = _event.target.files![0];
+    addPhoto.mutate({ id: bikeTrip!.id, photo: file });
+    setIsPhotoAlertOpen(true);
+  };
 
   return (
     <IonPage>
@@ -87,6 +101,7 @@ const BikeTripDetails = () => {
               {bikeTrip.rating && (
                 <p>Ocena: {Math.round(bikeTrip.rating)} / 5 ⭐️</p>
               )}
+              
               <Rating
                 initialValue={rating}
                 onClick={(rate) => {
@@ -95,6 +110,18 @@ const BikeTripDetails = () => {
                 }}
                 readonly={rating !== 0}
               />
+
+              <input
+                type="file"
+                id="file-upload"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={sendPhoto}
+              />
+
+              <IonButton onClick={openFileDialog}>
+                <IonIcon slot="icon-only" icon={camera}></IonIcon>
+              </IonButton>
             </IonCardContent>
 
             {bikeTrip.locations.length > 0 ? (
@@ -119,6 +146,15 @@ const BikeTripDetails = () => {
           </IonCard>
         )}
       </IonContent>
+
+
+      <IonAlert
+        isOpen={isPhotoAlertOpen}
+        header="Zdjęcie przesłane"
+        message="Zostanie ono dodane po zatwierdzeniu przez administratora"
+        buttons={['OK']}
+        onDidDismiss={() => setIsPhotoAlertOpen(false)}
+      ></IonAlert>
     </IonPage>
   );
 };

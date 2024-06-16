@@ -59,6 +59,15 @@ export const useBikeTrips = (id?: string) => {
     rateBikeTripMutation.mutate({ id, rating });
   };
 
+  const addPhoto = useMutation({
+    mutationKey: ["addPhoto"],
+    mutationFn: ({ id, photo }: { id: number; photo: File }) => {
+      const formData = new FormData();
+      formData.append("file", photo);
+      return Axios.post(URLS.PHOTOS(id.toString()), formData).then((res) => res.data);
+    }
+  });
+
   return {
     bikeTrips,
     isBikeTripsPending,
@@ -72,6 +81,8 @@ export const useBikeTrips = (id?: string) => {
     addFavourite,
     ratings,
     rateBikeTripMutation,
-    rateBikeTrip
+    rateBikeTrip,
+
+    addPhoto
   };
 };

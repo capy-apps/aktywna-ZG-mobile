@@ -54,7 +54,6 @@ export const MapView = ({
       zoom={13}
       scrollWheelZoom={true}
       style={{ height: "100%", width: "100%" }}>
-      {/* <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" /> */}
       <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png" />
 
       <LayersControl position="topright">
