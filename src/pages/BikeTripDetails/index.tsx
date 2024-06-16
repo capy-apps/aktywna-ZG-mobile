@@ -21,9 +21,9 @@ import { MapView } from "../../components/MapView";
 import { useParams } from "react-router";
 import { camera, caretBack } from "ionicons/icons";
 import { useEffect, useState } from "react";
-import { URLS } from "../../URLS";
-import Axios from "../../utils/axios";
 import { Rating } from "react-simple-star-rating";
+import { Gallery, Image } from "react-grid-gallery";
+import Lightbox from "yet-another-react-lightbox";
 
 interface ParamTypes {
   id: string;
@@ -34,18 +34,9 @@ const BikeTripDetails = () => {
   const { bikeTrip, isBikeTripPending, ratings, rateBikeTrip, addPhoto } =
     useBikeTrips(id);
 
-  const [photo, setPhoto] = useState<string | null>(null);
+  const [index, setIndex] = useState(-1);
   const [rating, setRating] = useState(0);
   const [isPhotoAlertOpen, setIsPhotoAlertOpen] = useState(false);
-
-  useEffect(() => {
-    if (bikeTrip && bikeTrip.photos.length > 0) {
-      const photoID = bikeTrip.photos[0].toString();
-      Axios.get<string>(URLS.PHOTOS(photoID)).then((res) => {
-        setPhoto(res.data);
-      });
-    }
-  }, [bikeTrip]);
 
   useEffect(() => {
     if (bikeTrip) {
@@ -62,6 +53,8 @@ const BikeTripDetails = () => {
     addPhoto.mutate({ id: bikeTrip!.id, photo: file });
     setIsPhotoAlertOpen(true);
   };
+
+  const handleImageClick = (index: number, image: Image) => setIndex(index);
 
   return (
     <IonPage>
@@ -101,7 +94,7 @@ const BikeTripDetails = () => {
               {bikeTrip.rating && (
                 <p>Ocena: {Math.round(bikeTrip.rating)} / 5 ⭐️</p>
               )}
-              
+
               <Rating
                 initialValue={rating}
                 onClick={(rate) => {
@@ -124,6 +117,30 @@ const BikeTripDetails = () => {
               </IonButton>
             </IonCardContent>
 
+            {bikeTrip.photos.length > 0 ? (
+              <>
+                <Gallery
+                  onClick={handleImageClick}
+                  enableImageSelection={false}
+                  images={bikeTrip.photos.map((photo) => ({
+                    src: `data:image/jpeg;base64,${photo.image}`,
+                    width: 4,
+                    height: 3
+                  }))}
+                />
+                <Lightbox
+                  slides={bikeTrip.photos.map((photo) => ({
+                    src: `data:image/jpeg;base64,${photo.image}`
+                  }))}
+                  open={index >= 0}
+                  index={index}
+                  close={() => setIndex(-1)}
+                />
+              </>
+            ) : (
+              <div>Brak zdjęć do zatwierdzenia</div>
+            )}
+
             {bikeTrip.locations.length > 0 ? (
               <div className="Map-div">
                 <MapView
@@ -137,24 +154,16 @@ const BikeTripDetails = () => {
             ) : (
               <div>Brak danych o trasie</div>
             )}
-
-            {photo && (
-              <IonImg
-                src={`data:image/jpeg;base64,${photo}`}
-                className="Ion-Img"></IonImg>
-            )}
           </IonCard>
         )}
       </IonContent>
-
 
       <IonAlert
         isOpen={isPhotoAlertOpen}
         header="Zdjęcie przesłane"
         message="Zostanie ono dodane po zatwierdzeniu przez administratora"
-        buttons={['OK']}
-        onDidDismiss={() => setIsPhotoAlertOpen(false)}
-      ></IonAlert>
+        buttons={["OK"]}
+        onDidDismiss={() => setIsPhotoAlertOpen(false)}></IonAlert>
     </IonPage>
   );
 };

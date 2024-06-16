@@ -30,6 +30,8 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import "yet-another-react-lightbox/styles.css";
+
 import Map from "./pages/Map";
 import Events from "./pages/Events";
 import BikeTrips from "./pages/BikeTrips";

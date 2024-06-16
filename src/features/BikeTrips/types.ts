@@ -17,11 +17,23 @@ export interface BikeTrip {
 
 export interface BikeTripLocations extends BikeTrip {
   locations: Location[] | [];
-  photos: number[];
+  photos: Photo[] | [];
 }
 
 export interface BikeTripRequest {
   name: string;
   difficulty: string;
   description: string;
+}
+
+export interface Photo {
+  id: number;
+  image: string;
+}
+
+export interface PhotoResponse {
+  id:      number;
+  trip_id: number;
+  public:  number;
+  photo:   string;
 }

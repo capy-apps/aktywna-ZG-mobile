@@ -1,5 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { BikeTrip, BikeTripLocations, BikeTripRequest } from "./types";
+import {
+  BikeTrip,
+  BikeTripLocations,
+  BikeTripRequest,
+  PhotoResponse
+} from "./types";
 import Axios from "../../utils/axios";
 import { URLS } from "../../URLS";
 import { useState } from "react";
@@ -65,7 +70,7 @@ export const useBikeTrips = (id?: string) => {
     mutationFn: ({ id, photo }: { id: number; photo: File }) => {
       const formData = new FormData();
       formData.append("file", photo);
-      return Axios.post(URLS.PHOTOS(id.toString()), formData).then(
+      return Axios.post(URLS.PHOTO(id.toString()), formData).then(
         (res) => res.data
       );
     }
@@ -105,9 +110,9 @@ export const useBikeTrips = (id?: string) => {
     rateBikeTripMutation,
     rateBikeTrip,
 
-    addPhoto,
-
     addBikeTrip,
-    addBikeTripLocations
+    addBikeTripLocations,
+    
+    addPhoto
   };
 };
