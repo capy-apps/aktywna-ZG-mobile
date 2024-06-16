@@ -1,15 +1,13 @@
 import {
+  AuthStateChange,
   FirebaseAuthentication,
   User
 } from "@capacitor-firebase/authentication";
 import {
-  IonBackButton,
   IonButton,
-  IonButtons,
   IonCard,
   IonCardContent,
   IonCardHeader,
-  IonCardSubtitle,
   IonCardTitle,
   IonContent,
   IonHeader,
@@ -20,22 +18,21 @@ import {
   IonPage,
   IonThumbnail,
   IonTitle,
-  IonToolbar,
-  useIonViewDidEnter
+  IonToolbar
 } from "@ionic/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useEvents } from "../../features/Events/useEvents";
 
 export const Account = () => {
   const [user, setUser] = useState<User | null>(null);
   const { userEvents } = useEvents(user?.uid);
 
-  useIonViewDidEnter(() => {
-    getCurrentUser().then((user) => {
-      setUser(user);
-      console.log(user);
+  useEffect(() => {
+    FirebaseAuthentication.addListener("authStateChange", (user: AuthStateChange) => {
+      setUser(user.user);
     });
-  });
+    getCurrentUser().then((user) => setUser(user));
+  }, []);
 
   const signInWithGoogle = async () => {
     const result = await FirebaseAuthentication.signInWithGoogle();
