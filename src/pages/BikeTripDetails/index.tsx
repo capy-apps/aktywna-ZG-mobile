@@ -66,7 +66,7 @@ const BikeTripDetails = () => {
           <IonTitle>Trasy rowerowe 🚴‍♂️</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen className="content">
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Trasy rowerowe 🚴‍♂️</IonTitle>

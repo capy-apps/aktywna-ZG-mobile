@@ -75,7 +75,7 @@ const App: React.FC = () => {
             </Route>
           </IonRouterOutlet>
 
-          <IonTabBar slot="bottom">
+          <IonTabBar slot="bottom" className="navbar">
             <IonTabButton tab="map" href="/map">
               <IonIcon aria-hidden="true" icon={map} />
               <IonLabel>Mapa</IonLabel>

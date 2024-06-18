@@ -6,6 +6,8 @@ import {
   IonCardSubtitle,
   IonCardTitle,
   IonContent,
+  IonFab,
+  IonFabButton,
   IonHeader,
   IonIcon,
   IonImg,
@@ -17,7 +19,7 @@ import {
 import { convertTimestamp } from "../../utils/date";
 import { useBikeTrips } from "../../features/BikeTrips/useBikeTrips";
 import "../mainStyles.css";
-import { heart, heartDislike } from "ionicons/icons";
+import { add, heart, heartDislike } from "ionicons/icons";
 
 const BikeTrips: React.FC = () => {
   const {
@@ -29,7 +31,7 @@ const BikeTrips: React.FC = () => {
   } = useBikeTrips();
 
   return (
-    <IonPage>
+    <IonPage className="ion-page">
       <IonHeader>
         <IonToolbar>
           <IonTitle>Trasy rowerowe 🚴‍♂️</IonTitle>
@@ -41,14 +43,14 @@ const BikeTrips: React.FC = () => {
             <IonTitle size="large">Trasy rowerowe 🚴‍♂️</IonTitle>
           </IonToolbar>
         </IonHeader>
+        <IonFab className="Ion-Button">
+              <IonFabButton routerLink="/bikeTrips/form">
+                <IonIcon icon={add}></IonIcon>
+            </IonFabButton>
+        </IonFab>
 
         {isBikeTripsPending && <div>Ładowanie...</div>}
-
-        <IonButton routerLink="/bikeTrips/form" className="Ion-Button">
-          Dodaj nową trasę!
-        </IonButton>
-
-        <div style={{ display: "flex", justifyContent: "center" }}>
+  
           <div className="playground">
             {bikeTrips &&
               bikeTrips
@@ -85,6 +87,9 @@ const BikeTrips: React.FC = () => {
                       )}
 
                       <IonButton
+                        shape="round"
+                        size="small"
+                        color={"medium"}
                         routerLink={`/bikeTrips/${trip.id}`}
                         className="Ion-Button">
                         Zobacz trasę
@@ -93,7 +98,6 @@ const BikeTrips: React.FC = () => {
                   </IonCard>
                 ))}
           </div>
-        </div>
       </IonContent>
     </IonPage>
   );

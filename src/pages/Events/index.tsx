@@ -31,9 +31,11 @@ const Events: React.FC = () => {
         </IonHeader>
 
         {isEventsPending && <div>Ładowanie...</div>}
-
+        <div className="card-container">
         {events &&
+        
           events.map((event) => (
+            
             <IonCard key={event.id} className="Ion-Card">
               {event.image && (
                 <img
@@ -57,6 +59,7 @@ const Events: React.FC = () => {
               </IonCardContent>
             </IonCard>
           ))}
+        </div>
       </IonContent>
     </IonPage>
   );

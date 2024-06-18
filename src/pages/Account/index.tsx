@@ -63,9 +63,9 @@ export const Account = () => {
             <IonTitle size="large">Konto</IonTitle>
           </IonToolbar>
         </IonHeader>
-
+        <div className="widthfull">
         {user ? (
-          <IonCard>
+          <IonCard className="accountcard">
             <IonCardHeader>
               <IonCardTitle>Zalogowany jako</IonCardTitle>
             </IonCardHeader>
@@ -82,7 +82,7 @@ export const Account = () => {
             </IonCardContent>
           </IonCard>
         ) : (
-          <IonCard>
+          <IonCard className="accountcard">
             <IonCardHeader>
               <IonCardTitle>Nie jesteś zalogowany</IonCardTitle>
             </IonCardHeader>
@@ -97,7 +97,7 @@ export const Account = () => {
         )}
 
         {userEvents && userEvents.length > 0 ? (
-          <IonCard>
+          <IonCard className="accountcard">
             <IonCardHeader>
               <IonCardTitle>Twoje osiągnięcia</IonCardTitle>
             </IonCardHeader>
@@ -117,6 +117,7 @@ export const Account = () => {
             </IonCardContent>
           </IonCard>
         ) : null}
+        </div>
       </IonContent>
     </IonPage>
   );
